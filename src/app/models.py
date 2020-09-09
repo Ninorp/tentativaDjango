@@ -63,3 +63,11 @@ class Sale(models.Model):
 
     def __str__(self):
         return self.time_of_sale
+
+
+class User(models.Model):
+    username = models.CharField(max_length=225, blank=False)
+    password = models.CharField(max_length=16, blank=False)
+
+    def __str__(self):
+        return self.username
