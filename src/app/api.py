@@ -9,6 +9,8 @@ class UserResource(ModelResource):
     class Meta:
         queryset = User.objects.all()
         resource_name = 'user'
+        excludes = ['password']
+        allowed_methods = ['get', 'post', 'delete']
 
 
 class BookResource(ModelResource):
@@ -17,6 +19,10 @@ class BookResource(ModelResource):
         queryset = Book.objects.all()
         resource_name = 'book'
         authorization = Authorization()
+        allowed_methods = ['get', 'post', 'delete', 'put']
+        
+    def dehydrate_title(self, bundle):
+        return bundle.data['title'].upper()
 
 
 class AuthorResource(ModelResource):
