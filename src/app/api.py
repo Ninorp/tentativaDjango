@@ -2,6 +2,7 @@ from tastypie.resources import ModelResource
 from tastypie.authorization import Authorization
 from tastypie import fields
 from .models import Book, User, Author, Publisher, Client, Sale
+import locale
 
 
 class UserResource(ModelResource):
@@ -55,6 +56,11 @@ class SaleResource(ModelResource):
         queryset = Sale.objects.all()
         resource_name = 'author'
         authorization = Authorization()
+        allowed_methods = ['get', 'post', 'delete', 'put']
+        
+    def dehydrate_total_price(self, bundle):
+        locale.setlocale(locale.LC_ALL, 'pt_BR')
+        return locale.currency(bundle.data['total_price'])
 
 
 class AuthorResource(ModelResource):
